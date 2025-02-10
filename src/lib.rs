@@ -1,14 +1,19 @@
 pub mod config;
+pub mod search;
 
 use std::fs;
 use config::Config;
 use std::error::Error;
+use search::{ search, search_case_insensitive };
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(&config.filename)?;
-    println!("Searching for {}", config.query);
     let mut flag: bool = false;
-    let results = search_mark(&config.query, &contents);
+    let results = if config.case_sensitive {
+        search_case_insensitive(&config.query, &contents)
+    } else {
+        search(&config.query, &contents)
+    };
     if results.len() != 0 {
         flag = true;
         for line in results {
@@ -22,37 +27,15 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    contents
-        .lines()
-        .filter(|line| line.contains(query))
-        .collect()
-}
-
-pub fn search_mark(query: &str, contents: &str) -> Vec<String> {
-    contents
-        .lines()
-        .filter(|line| line.contains(query))
-        .map(|line| { line.replace(query, &format!("<<<{}>>>", query)) })
-        .collect()
-}
-
-pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let query = query.to_lowercase();
-    contents
-        .lines()
-        .filter(|line| line.to_lowercase().contains(&query))
-        .collect()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use search::search_mark;
 
     #[test]
     fn test_run() {
         // Update path to be relative to project root
-        let args = vec!["minigrep".to_string(), "pub".to_string(), "poem.txt".to_string()];
+        let args = vec!["minigrep".to_string(), "to".to_string(), "poem.txt".to_string()];
         let config = Config::new(&args).unwrap_or_else(|e| {
             panic!("Problem parsing arguments, {}", e);
         });
