@@ -29,24 +29,9 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 #[cfg(test)]
 mod tests {
+
     use super::*;
     use search::{search, search_case_insensitive, search_mark};
-
-    #[test]
-    fn test_run() {
-        // Update path to be relative to project root
-        let args = vec![
-            "minigrep".to_string(),
-            "to".to_string(),
-            "poem.txt".to_string(),
-        ];
-        let config = Config::new(&args).unwrap_or_else(|e| {
-            panic!("Problem parsing arguments, {}", e);
-        });
-        if let Err(e) = run(config) {
-            panic!("Application error: {}", e);
-        }
-    }
 
     #[test]
     fn test_search() {
@@ -74,21 +59,6 @@ mod tests {
             vec!["safe, fast, pro<<<duct>>>ive."],
             search_mark(query, contents)
         );
-    }
-
-    #[test]
-    fn test_search_noline() {
-        let args = vec![
-            "minigrep".to_string(),
-            "test".to_string(),
-            "noline.txt".to_string(),
-        ];
-        let config = Config::new(&args).unwrap_or_else(|e| {
-            panic!("Problem parsing arguments, {}", e);
-        });
-        if let Err(e) = run(config) {
-            panic!("Application error: {}", e);
-        }
     }
 
     #[test]

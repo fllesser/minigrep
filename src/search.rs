@@ -1,4 +1,3 @@
-
 pub fn search_comprehensive(query: &str, contents: &str, case_insensitive: bool) -> Vec<String> {
     let query = if case_insensitive {
         query.to_lowercase()
