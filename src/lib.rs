@@ -89,15 +89,21 @@ mod tests {
         let start = std::time::Instant::now();
         let result_for = search_for(&query, &contents);
         let duration_for = start.elapsed();
-        println!("search_for took: {:?}", duration_for);
-        println!("result_for.len(): {}", result_for.len());
+        println!(
+            "search_for took: {:?}, result len: {}",
+            duration_for,
+            result_for.len()
+        );
 
         let contents = fs::read_to_string("poem.txt").unwrap();
         let start = std::time::Instant::now();
         let result_iter = search_iter(&query, &contents);
         let duration_iter = start.elapsed();
-        println!("search_iter took: {:?}", duration_iter);
-        println!("result_iter.len(): {}", result_iter.len());
+        println!(
+            "search_iter took: {:?}, resul len: {}",
+            duration_iter,
+            result_iter.len()
+        );
 
         assert_eq!(result_for, result_iter);
     }
