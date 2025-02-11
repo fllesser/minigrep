@@ -20,3 +20,5 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose -- --show-output
+    - name: Run search
+      run: cargo run to poem.txt
