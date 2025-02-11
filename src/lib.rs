@@ -30,6 +30,8 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #[cfg(test)]
 mod tests {
 
+    use crate::search::{search_for, search_iter};
+
     use super::*;
     use search::{search, search_case_insensitive, search_mark};
 
@@ -78,5 +80,26 @@ mod tests {
             vec!["Rust:", "Trust me."],
             search_case_insensitive(query, contents)
         );
+    }
+
+    #[test]
+    fn bench_for_and_iter() {
+        let query = "the";
+        let contents = fs::read_to_string("poem.txt").unwrap();
+        // Performance test
+        let start = std::time::Instant::now();
+        let result_for = search_for(&query, &contents);
+        let duration_for = start.elapsed();
+        println!("search_for took: {:?}", duration_for);
+        println!("result_for.len(): {}", result_for.len());
+
+        let contents = fs::read_to_string("poem.txt").unwrap();
+        let start = std::time::Instant::now();
+        let result_iter = search_iter(&query, &contents);
+        let duration_iter = start.elapsed();
+        println!("search_iter took: {:?}", duration_iter);
+        println!("result_iter.len(): {}", result_iter.len());
+
+        assert_eq!(result_for, result_iter);
     }
 }
