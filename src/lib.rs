@@ -1,5 +1,4 @@
 pub mod config;
-pub mod deepseek;
 pub mod search;
 
 use config::Config;
