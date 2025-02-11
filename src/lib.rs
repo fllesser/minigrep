@@ -90,7 +90,7 @@ mod tests {
         let result_for = search_for(&query, &contents);
         let duration_for = start.elapsed();
         println!(
-            "search_for took: {:?}, result len: {}",
+            "search by for took: {:?}, result len: {}",
             duration_for,
             result_for.len()
         );
@@ -100,7 +100,7 @@ mod tests {
         let result_iter = search_iter(&query, &contents);
         let duration_iter = start.elapsed();
         println!(
-            "search_iter took: {:?}, resul len: {}",
+            "search by iter took: {:?}, result len: {}",
             duration_iter,
             result_iter.len()
         );
