@@ -1,3 +1,27 @@
+
+
+/// Searches for a query in content with line numbers and highlighting
+/// 
+/// # Example
+/// ```
+/// let arg = "hello";
+/// let contents = "Hello\nWorld\nRust";
+/// let case_insensitive = true;
+/// let results = minigrep::search::search_comprehensive(arg, contents, case_insensitive);
+/// assert_eq!(vec!["0:<<<Hello>>>"], results);
+/// ```
+///
+/// # Arguments
+///
+/// * `query` - The string to search for
+/// * `contents` - The text content to search within
+/// * `case_insensitive` - Boolean flag for case-insensitive search (where applicable)
+///
+/// # Returns
+///
+/// Returns a `Vec` containing the matching lines or modified lines depending on the function used.
+/// Different functions return either `Vec<&str>` or `Vec<String>` based on whether they modify the output.
+///
 pub fn search_comprehensive(query: &str, contents: &str, case_insensitive: bool) -> Vec<String> {
     let query = if case_insensitive {
         query.to_lowercase()

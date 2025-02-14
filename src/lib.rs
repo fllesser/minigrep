@@ -1,8 +1,17 @@
+//! minigrep by flless
+//! 
+//! minigrep is a simple command line tool that searches for a query string in a given file and returns the lines that contain the query string.
+//! 
+//! # Usage
+//! minigrep query filename
+//! 
+
 pub mod config;
 pub mod search;
 
+pub use search::search_comprehensive;
+
 use config::Config;
-use search::search_comprehensive;
 use std::error::Error;
 use std::fs;
 
@@ -108,3 +117,5 @@ mod tests {
         assert_eq!(result_for, result_iter);
     }
 }
+
+
